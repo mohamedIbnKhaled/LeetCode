@@ -1,16 +1,14 @@
 class Solution {
 public:
-    int memo[46];
-    int solve(int n){
-        if(n==0){return 1;}
-        if(memo[n]!=0)return memo[n];
-        int &ret=memo[n];
-        if(n-2>=0)ret+=solve(n-2);
-        if(n-1>=0)ret+=solve(n-1);
-        return ret;
+    unordered_map<int,int>memo;
+    int solve(int s,int n){
+        if(n==s)return 1;
+        if(s>n)return 0;
+        if(memo.find(s) != memo.end())return memo[s];
+        return memo[s]=solve(s+1,n)+solve(s+2,n);
     }
     int climbStairs(int n) {
-        solve(n);
-        return memo[n];
+        return solve(0,n);
+        
     }
 };
